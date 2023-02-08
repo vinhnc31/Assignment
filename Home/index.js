@@ -2,7 +2,7 @@ import { View, Text, StyleSheet, Image } from "react-native";
 const Home = () => {
   return (
     <View style = {styles.controller}>
-      <Text style = {styles.text}>Chào Mừng Bạn Đến Với App Quản Lý Cửa Hàng</Text>
+      <Text style = {styles.text}>QUẢN LÝ CỬA HÀNG</Text>
     </View>
   );
 };
@@ -14,10 +14,11 @@ const styles = StyleSheet.create({
         flex:1,
         alignItems:"center",
         justifyContent:"center",
+        backgroundColor:"#B9FFF8"
     },
     text : {
         fontSize: 28,
         fontStyle:"italic",
-        padding:24,
+        fontWeight: 'bold',
     }
 })

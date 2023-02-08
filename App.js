@@ -6,7 +6,6 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import Home from "./Home";
 import Datail from "./Detail";
 import Information from "./Information";
-
 const homeName = "Home";
 const detailName = "Detail";
 const informationname = "Information";
@@ -21,17 +20,17 @@ const App = () => {
             let iconName;
             let rn = route.name;
             if (rn === homeName) {
-              iconName = focused ? "home" : "home-outline";
+             iconName = focused ? "home" : "home-outline";
             } else if (rn === detailName) {
-              iconName = focused ? "list" : "list-outline";
+              iconName = focused ? "list" : "ios-list";
             } else if (rn === informationname) {
-              iconName = focused ? "user" : "user-outline";
+              iconName = focused ? "information" : "ios-information-circle-outline";
             }
             return <Ionicons name={iconName} size={size} color={color} />;
           },
         })}
         tabBarOptions={{
-          activeTintColor: "tomato",
+          activeTintColor: "red",
           inactiveTintColor: "grey",
           labelStyle: { paddingBottom: 10, fontSize: 10 },
           style: { padding: 10, height: 70 },
@@ -48,7 +47,7 @@ const App = () => {
           options={{ headerShown: false }}
         />
         <Tab.Screen
-          name="Infomation"
+          name="Information"
           component={Information}
           options={{ headerShown: false }}
         />
