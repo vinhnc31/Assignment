@@ -4,11 +4,11 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 import Home from "./Home";
-import Datail from "./Detail";
+import Detail from "./Detail";
 import Information from "./Information";
 const homeName = "Home";
 const detailName = "Detail";
-const informationname = "Information";
+const informationname = "Information";  
 const Tab = createBottomTabNavigator();
 const App = () => {
   return (
@@ -43,7 +43,7 @@ const App = () => {
         />
         <Tab.Screen
           name="Detail"
-          component={Datail}
+          component={Detail}
           options={{ headerShown: false }}
         />
         <Tab.Screen

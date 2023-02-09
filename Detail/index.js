@@ -49,11 +49,8 @@ const Detail = (props) => {
   ];
 
   const [userList, setUserlist] = useState(listuser);
-  const addUser = (ten_mh) => {
-    navigation.navigate(ten_mh);
-  };
   const onDelete = (id) => {
-    Alert.alert("Ban Chac Chan La Muon Xoa Chu", [
+    Alert.alert("Ban Chac Chan La Muon Xoa Chu", '', [
       {
         text: "No",
         onPress: () => {},
@@ -72,7 +69,9 @@ const Detail = (props) => {
     <SafeAreaView style={styles.controller}>
       <View style={styles.tabbar}>
         <Text style={styles.text}>Danh Sach Cac Nha Hang</Text>
-        <Pressable onPress={() => addUser("ManagerList")}>
+        <Pressable
+          onPress={() => navigation.navigate('ManagerList')}
+        >
           <Image
             style={{ height: 30, width: 30, marginHorizontal: 80 }}
             source={require("../assets/add.png")}
@@ -112,7 +111,7 @@ const Detail = (props) => {
                   alignItems: "center",
                 }}
               >
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => navigation.navigate('EditItem')}>
                   <Image
                     style={{ width: 40, height: 40 }}
                     source={require("../assets/edit.png")}
