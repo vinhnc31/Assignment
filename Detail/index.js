@@ -50,7 +50,7 @@ const Detail = (props) => {
 
   const [userList, setUserlist] = useState(listuser);
   const onDelete = (id) => {
-    Alert.alert("Ban Chac Chan La Muon Xoa Chu", '', [
+    Alert.alert("Ban Chac Chan La Muon Xoa Chu ?", "", [
       {
         text: "No",
         onPress: () => {},
@@ -67,69 +67,74 @@ const Detail = (props) => {
   };
   return (
     <SafeAreaView style={styles.controller}>
-      <View style={styles.tabbar}>
-        <Text style={styles.text}>Danh Sach Cac Nha Hang</Text>
-        <Pressable
-          onPress={() => navigation.navigate('ManagerList')}
-        >
-          <Image
-            style={{ height: 30, width: 30, marginHorizontal: 80 }}
-            source={require("../assets/add.png")}
-          />
-        </Pressable>
-      </View>
-      <View>
-        <FlatList
-          data={userList}
-          renderItem={({ item }) => (
-            <View
-              style={{
-                borderRadius: 10,
-                backgroundColor: "#6FEDD6",
-                padding: 10,
-                width: 375,
-                marginTop: 5,
-                flexDirection: "row",
-              }}
-            >
-              <Image
-                style={{ width: 80, height: 80 }}
-                source={{ uri: item.link }}
-              />
-              <View
-                style={{ marginLeft: 5, justifyContent: "center", width: 180 }}
-              >
-                <Text>Name: {item.name}</Text>
-                <Text>Address: {item.diachi}</Text>
-                <Text>Phone: {item.phone}</Text>
-                <Text>Status: {item.status}</Text>
-              </View>
+      
+        <View style={styles.tabbar}>
+          <Text style={styles.text}>Danh Sach Cac Nha Hang</Text>
+          <Pressable onPress={() => navigation.navigate("ListStore")}>
+            <Image
+              style={{ height: 30, width: 30, marginHorizontal: 120 }}
+              source={require("../assets/add.png")}
+            />
+          </Pressable>
+        </View>
+        <View>
+          <FlatList
+            data={userList}
+            renderItem={({ item }) => (
               <View
                 style={{
+                  borderRadius: 10,
+                  backgroundColor: "#6FEDD6",
+                  padding: 10,
+                  width: 415,
+                  marginTop: 5,
                   flexDirection: "row",
-                  marginLeft: 5,
-                  alignItems: "center",
                 }}
               >
-                <TouchableOpacity onPress={() => navigation.navigate('EditItem')}>
-                  <Image
-                    style={{ width: 40, height: 40 }}
-                    source={require("../assets/edit.png")}
-                  />
-                </TouchableOpacity>
+                <Image
+                  style={{ width: 80, height: 80 }}
+                  source={{ uri: item.link }}
+                />
+                <View
+                  style={{
+                    marginLeft: 5,
+                    justifyContent: "center",
+                    width: 215,
+                  }}
+                >
+                  <Text>Name: {item.name}</Text>
+                  <Text>Address: {item.diachi}</Text>
+                  <Text>Phone: {item.phone}</Text>
+                  <Text>Status: {item.status}</Text>
+                </View>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    marginLeft: 5,
+                    alignItems: "center",
+                  }}
+                >
+                  <TouchableOpacity
+                    onPress={() => navigation.navigate("UpdateStore")}
+                  >
+                    <Image
+                      style={{ width: 40, height: 40 }}
+                      source={require("../assets/edit.png")}
+                    />
+                  </TouchableOpacity>
 
-                <TouchableOpacity onPress={() => onDelete(item.id)}>
-                  <Image
-                    style={{ width: 40, height: 40, marginLeft: 10 }}
-                    source={require("../assets/delete.png")}
-                  />
-                </TouchableOpacity>
+                  <TouchableOpacity onPress={() => onDelete(item.id)}>
+                    <Image
+                      style={{ width: 40, height: 40, marginLeft: 10 }}
+                      source={require("../assets/delete.png")}
+                    />
+                  </TouchableOpacity>
+                </View>
               </View>
-            </View>
-          )}
-          keyExtractor={(item) => item.id}
-        />
-      </View>
+            )}
+            keyExtractor={(item) => item.id}
+          />
+        </View>
     </SafeAreaView>
   );
 };

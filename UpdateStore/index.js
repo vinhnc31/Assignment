@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, TextInput,  StyleSheet, Text, Alert , TouchableOpacity } from "react-native";
 import { useState } from "react";
-const ManagerList = (props) => {
+const UpdateStore = (props) => {
   const navigation = props.navigation;
   const [nameInput, setNameInput] = useState("");
   const [AddressInput, setAddressInput] = useState("");
@@ -44,7 +44,7 @@ const ManagerList = (props) => {
       />
       <View style={{ flexDirection: "row",marginLeft:30}}>
         <TouchableOpacity style= {styles.buttonSave} onPress = {() =>Alert.alert("save")}>
-          <Text style = {{fontSize:20,color:"#fff"}}>Save</Text>
+          <Text style = {{fontSize:20,color:"#fff"}}>Update</Text>
         </TouchableOpacity>
         <TouchableOpacity style= {styles.buttonCloes} onPress = {() => Alert.alert("")}>
           <Text style = {{fontSize:20,color:"#fff"}}>Close</Text>
@@ -53,7 +53,7 @@ const ManagerList = (props) => {
     </View>
   );
 };
-export default ManagerList;
+export default UpdateStore;
 
 const styles = StyleSheet.create({
   controller: {
