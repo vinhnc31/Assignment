@@ -1,53 +1,96 @@
-import React from 'react';
-import { View, TextInput,  StyleSheet, Text, Alert , TouchableOpacity } from "react-native";
-import { useState } from "react";
+import React from "react";
+import {
+  View,
+  TextInput,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+} from "react-native";
+import { useState, useEffect } from "react";
+import { API_LISTMANAGER } from "../Api";
 const UpdateStore = (props) => {
   const navigation = props.navigation;
-  const [nameInput, setNameInput] = useState("");
-  const [AddressInput, setAddressInput] = useState("");
-  const [PhoneInput, setPhoneInput] = useState("");
-  const [statusInput, setStatusInput] = useState("");
-  const onclose =() =>{
-    setNameInput = ("");
-    setAddressInput = ("");
-    setPhoneInput = ("");
-    setStatusInput = ("");
-  }
+  const [link, setlink] = useState("");
+  const [name, setNameInput] = useState("");
+  const [address, setAddressInput] = useState("");
+  const [phone, setPhoneInput] = useState("");
+  const [status, setStatusInput] = useState("");
+  const editData = props.route.params?.editData;
+  useEffect(() => {
+    if (editData) {
+      setNameInput(editData.name);
+      setAddressInput(editData.address);
+      setPhoneInput(editData.phone);
+      setStatusInput(editData.status);
+      setlink(editData.link);
+    }
+  }, [editData?.id]);
+  const onsubmit = () => {
+    const newobj = {
+      name : name,
+      phone : phone,
+      address : address,
+      status : status,
+      link : link,
+    }
+    fetch(API_LISTMANAGER + "/" + editData.id, {
+      method: "PUT",
+      body: JSON.stringify(newobj),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+    })
+      .then((res) => navigation.goBack())
+  };
   return (
     <View style={styles.controller}>
-      <Text style={{ fontSize: 25, fontWeight: "bold",marginTop:25,marginLeft:10 }}>
-        Them Danh Sach Cua Hang
+      <Text
+        style={{
+          fontSize: 25,
+          fontWeight: "bold",
+          marginTop: 25,
+          marginLeft: 10,
+        }}
+      >
+        Update Danh Sach Cua Hang
       </Text>
       <TextInput
         style={styles.input}
+        placeholder="Link :"
+        defaultValue={link}
+        onChangeText={(text) => setlink(text)}
+      />
+      <TextInput
+        style={styles.input}
         placeholder="Name :"
-        value={nameInput}
+        defaultValue={name}
         onChangeText={(text) => setNameInput(text)}
       />
       <TextInput
         style={styles.input}
         placeholder="Address :"
-        value={AddressInput}
+        defaultValue={address}
         onChangeText={(text) => setAddressInput(text)}
       />
       <TextInput
         style={styles.input}
         placeholder="Phone :"
-        value={PhoneInput}
+        defaultValue={phone}
         onChangeText={(text) => setPhoneInput(text)}
       />
       <TextInput
         style={styles.input}
         placeholder="Status :"
-        value={statusInput}
+        defaultValue={status}
         onChangeText={(text) => setStatusInput(text)}
       />
-      <View style={{ flexDirection: "row",marginLeft:30}}>
-        <TouchableOpacity style= {styles.buttonSave} onPress = {() =>Alert.alert("save")}>
-          <Text style = {{fontSize:20,color:"#fff"}}>Update</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style= {styles.buttonCloes} onPress = {() => Alert.alert("")}>
-          <Text style = {{fontSize:20,color:"#fff"}}>Close</Text>
+      <View style={{ alignItems: "center" }}>
+        <TouchableOpacity
+          style={styles.buttonSave}
+          onPress={() => onsubmit()}
+        >
+          <Text style={{ fontSize: 20, color: "#fff" }}>Update</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -69,21 +112,21 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   buttonSave: {
-    width:150,
-    height:50,
-    borderRadius:20,
-    backgroundColor:"green",
-    alignItems:"center",
-    justifyContent:"center",
-    margin:5,
+    width: 150,
+    height: 50,
+    borderRadius: 20,
+    backgroundColor: "green",
+    alignItems: "center",
+    justifyContent: "center",
+    margin: 5,
   },
   buttonCloes: {
-    width:150,
-    height:50,
-    borderRadius:20,
-    backgroundColor:"red",
-    alignItems:"center",
-    justifyContent:"center",
-    margin:5,
+    width: 150,
+    height: 50,
+    borderRadius: 20,
+    backgroundColor: "red",
+    alignItems: "center",
+    justifyContent: "center",
+    margin: 5,
   },
 });

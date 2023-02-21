@@ -1,0 +1,20 @@
+{
+  "listmanager": [
+    {
+      "id": 1,
+      "name": "Ga Tuoi Manh Hoach",
+      "address": "Hai Duong",
+      "phone": "0966346589",
+      "status": "0",
+      "link": "https://png.pngtree.com/element_our/png_detail/20181229/vector-shop-icon-png_302739.jpg"
+    },
+    {
+      "name": "Ga De Vuong",
+      "phone": "0966896579uuuu",
+      "address": "Ha Noi",
+      "status": "1",
+      "link": "https://img.freepik.com/vector-premium/icono-tienda_126283-1646.jpg",
+      "id": 2
+    }
+  ]
+}

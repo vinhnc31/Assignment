@@ -1,23 +1,55 @@
-import React from 'react';
-import { View, TextInput,  StyleSheet, Text, Alert , TouchableOpacity } from "react-native";
+import React from "react";
+import {
+  View,
+  TextInput,
+  StyleSheet,
+  Text,
+  Alert,
+  TouchableOpacity,
+} from "react-native";
 import { useState } from "react";
+import { API_LISTMANAGER } from "../Api";
 const ListStore = (props) => {
   const navigation = props.navigation;
+  const [link, setlink] = useState("");
   const [nameInput, setNameInput] = useState("");
   const [AddressInput, setAddressInput] = useState("");
   const [PhoneInput, setPhoneInput] = useState("");
   const [statusInput, setStatusInput] = useState("");
-  const onclose =() =>{
-    setNameInput = ("");
-    setAddressInput = ("");
-    setPhoneInput = ("");
-    setStatusInput = ("");
-  }
+  const onadd = () => {
+    const newObj = {
+      name: nameInput,
+      address: AddressInput,
+      phone: PhoneInput,
+      status: statusInput,
+    };
+    fetch(API_LISTMANAGER, {
+      method: "POST",
+      body: JSON.stringify(newObj),
+      headers: {
+        'Content-Type': "application/json",
+        'Accept': "application/json",
+      },
+    }).then((res) => navigation.goBack());
+  };
   return (
     <View style={styles.controller}>
-      <Text style={{ fontSize: 25, fontWeight: "bold",marginTop:25,marginLeft:10 }}>
+      <Text
+        style={{
+          fontSize: 25,
+          fontWeight: "bold",
+          marginTop: 25,
+          marginLeft: 10,
+        }}
+      >
         Them Danh Sach Cua Hang
       </Text>
+      <TextInput
+        style={styles.input}
+        placeholder="Link :"
+        value={link}
+        onChangeText={(text) => setlink(text)}
+      />
       <TextInput
         style={styles.input}
         placeholder="Name :"
@@ -42,12 +74,15 @@ const ListStore = (props) => {
         value={statusInput}
         onChangeText={(text) => setStatusInput(text)}
       />
-      <View style={{ flexDirection: "row",marginLeft:30}}>
-        <TouchableOpacity style= {styles.buttonSave} onPress = {() =>Alert.alert("save")}>
-          <Text style = {{fontSize:20,color:"#fff"}}>Save</Text>
+      <View style={{ flexDirection: "row", marginLeft: 50 }}>
+        <TouchableOpacity
+          style={styles.buttonSave}
+          onPress={() => onadd()}
+        >
+          <Text style={{ fontSize: 20, color: "#fff" }}>SUBMIT</Text>
         </TouchableOpacity>
-        <TouchableOpacity style= {styles.buttonCloes} onPress = {() => Alert.alert("")}>
-          <Text style = {{fontSize:20,color:"#fff"}}>Close</Text>
+        <TouchableOpacity style={styles.buttonCloes} onPress={() => navigation.navigate('Detail')}>
+          <Text style={{ fontSize: 20, color: "#fff" }}>CANCLE</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -69,21 +104,21 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   buttonSave: {
-    width:150,
-    height:50,
-    borderRadius:20,
-    backgroundColor:"green",
-    alignItems:"center",
-    justifyContent:"center",
-    margin:5,
+    width: 150,
+    height: 50,
+    borderRadius: 20,
+    backgroundColor: "green",
+    alignItems: "center",
+    justifyContent: "center",
+    margin: 5,
   },
   buttonCloes: {
-    width:150,
-    height:50,
-    borderRadius:20,
-    backgroundColor:"red",
-    alignItems:"center",
-    justifyContent:"center",
-    margin:5,
+    width: 150,
+    height: 50,
+    borderRadius: 20,
+    backgroundColor: "red",
+    alignItems: "center",
+    justifyContent: "center",
+    margin: 5,
   },
 });
