@@ -15,6 +15,14 @@ const UpdateStore = (props) => {
   const [address, setAddressInput] = useState("");
   const [phone, setPhoneInput] = useState("");
   const [status, setStatusInput] = useState("");
+  const [checkphone, setCheckphone] = useState(false);
+  const handleCheckphone = (text) => {
+    let check = /([\+84|84|0]+(3|5|7|8|9|1[2|6|8|9]))+([0-9]{8})\b/;
+    setPhoneInput(text);
+    if (check.test(text)) {
+      setCheckphone(false);
+    } else setCheckphone(true);
+  };
   const editData = props.route.params?.editData;
   useEffect(() => {
     if (editData) {
@@ -27,21 +35,20 @@ const UpdateStore = (props) => {
   }, [editData?.id]);
   const onsubmit = () => {
     const newobj = {
-      name : name,
-      phone : phone,
-      address : address,
-      status : status,
-      link : link,
-    }
+      name: name,
+      phone: phone,
+      address: address,
+      status: status,
+      link: link,
+    };
     fetch(API_LISTMANAGER + "/" + editData.id, {
       method: "PUT",
       body: JSON.stringify(newobj),
       headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
+        "Content-Type": "application/json",
+        Accept: "application/json",
       },
-    })
-      .then((res) => navigation.goBack())
+    }).then((res) => navigation.goBack());
   };
   return (
     <View style={styles.controller}>
@@ -77,22 +84,31 @@ const UpdateStore = (props) => {
         style={styles.input}
         placeholder="Phone :"
         defaultValue={phone}
-        onChangeText={(text) => setPhoneInput(text)}
+        onChangeText={(text) => handleCheckphone(text)}
+        keyboardType="numeric"
       />
+      {checkphone ? (
+        <Text style={{ color: "red", fontSize: 15, marginHorizontal: 20 }}>
+          Wrong fomat phone
+        </Text>
+      ) : (
+        <Text></Text>
+      )}
       <TextInput
         style={styles.input}
         placeholder="Status :"
         defaultValue={status}
         onChangeText={(text) => setStatusInput(text)}
       />
-      <View style={{ alignItems: "center" }}>
-        <TouchableOpacity
-          style={styles.buttonSave}
-          onPress={() => onsubmit()}
-        >
-          <Text style={{ fontSize: 20, color: "#fff" }}>Update</Text>
+      {checkphone === true ? (
+        <TouchableOpacity disabled style={styles.buttonSave1} onPress={() => onsubmit()}>
+          <Text style={{ fontSize: 20, color: "#fff" }}>SUBMIT</Text>
         </TouchableOpacity>
-      </View>
+      ) : (
+        <TouchableOpacity style={styles.buttonSave} onPress={() => onsubmit()}>
+          <Text style={{ fontSize: 20, color: "#fff" }}>SUBMIT</Text>
+        </TouchableOpacity>
+      )}
     </View>
   );
 };
@@ -119,6 +135,17 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     margin: 5,
+    marginHorizontal: 130,
+  },
+  buttonSave1: {
+    width: 150,
+    height: 50,
+    borderRadius: 20,
+    backgroundColor: "gray",
+    alignItems: "center",
+    justifyContent: "center",
+    margin: 5,
+    marginHorizontal: 130,
   },
   buttonCloes: {
     width: 150,

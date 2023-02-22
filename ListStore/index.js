@@ -6,6 +6,7 @@ import {
   Text,
   Alert,
   TouchableOpacity,
+  Keyboard,
 } from "react-native";
 import { useState } from "react";
 import { API_LISTMANAGER } from "../Api";
@@ -16,6 +17,15 @@ const ListStore = (props) => {
   const [AddressInput, setAddressInput] = useState("");
   const [PhoneInput, setPhoneInput] = useState("");
   const [statusInput, setStatusInput] = useState("");
+  const [checkphone, setCheckphone] = useState(false);
+
+  const handleCheckphone = (text) => {
+    let check = /([\+84|84|0]+(3|5|7|8|9|1[2|6|8|9]))+([0-9]{8})\b/;
+    setPhoneInput(text);
+    if (check.test(text)) {
+      setCheckphone(false);
+    } else setCheckphone(true);
+  };
   const onadd = () => {
     const newObj = {
       name: nameInput,
@@ -27,7 +37,7 @@ const ListStore = (props) => {
       method: "POST",
       body: JSON.stringify(newObj),
       headers: {
-        'Content-Type': "application/json",
+        "Content-Type": "application/json",
         'Accept': "application/json",
       },
     }).then((res) => navigation.goBack());
@@ -50,6 +60,7 @@ const ListStore = (props) => {
         value={link}
         onChangeText={(text) => setlink(text)}
       />
+
       <TextInput
         style={styles.input}
         placeholder="Name :"
@@ -66,26 +77,41 @@ const ListStore = (props) => {
         style={styles.input}
         placeholder="Phone :"
         value={PhoneInput}
-        onChangeText={(text) => setPhoneInput(text)}
+        onChangeText={(text) => {
+          handleCheckphone(text);
+        }}
+        keyboardType="numeric"
       />
+      {checkphone ? (
+        <Text style={{ color: "red", fontSize: 15, marginHorizontal: 20 }}>
+          Wrong fomat phone
+        </Text>
+      ) : (
+        <Text></Text>
+      )}
+
       <TextInput
         style={styles.input}
         placeholder="Status :"
         value={statusInput}
         onChangeText={(text) => setStatusInput(text)}
       />
-      <View style={{ flexDirection: "row", marginLeft: 50 }}>
-        <TouchableOpacity
-          style={styles.buttonSave}
-          onPress={() => onadd()}
-        >
+        {nameInput === "" ||
+        AddressInput === "" ||
+        PhoneInput === "" ||
+        link === "" ||
+        checkphone == true ? (
+          <TouchableOpacity 
+          disabled
+          style={styles.buttonSave1} onPress={() => onadd()}>
           <Text style={{ fontSize: 20, color: "#fff" }}>SUBMIT</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.buttonCloes} onPress={() => navigation.navigate('Detail')}>
-          <Text style={{ fontSize: 20, color: "#fff" }}>CANCLE</Text>
-        </TouchableOpacity>
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity style={styles.buttonSave} onPress={() => onadd()}>
+            <Text style={{ fontSize: 20, color: "#fff" }}>SUBMIT</Text>
+          </TouchableOpacity>
+        )}
       </View>
-    </View>
   );
 };
 export default ListStore;
@@ -111,6 +137,17 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     margin: 5,
+    marginHorizontal:130
+  },
+  buttonSave1: {
+    width: 150,
+    height: 50,
+    borderRadius: 20,
+    backgroundColor: "gray",
+    alignItems: "center",
+    justifyContent: "center",
+    margin: 5,
+    marginHorizontal:130
   },
   buttonCloes: {
     width: 150,
